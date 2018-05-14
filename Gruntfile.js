@@ -2,6 +2,8 @@ module.exports = function (grunt) {
 
 	var config = grunt.file.readJSON('config.json' || grunt.option('config'));
 
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
+
 	grunt.registerTask('formatPage1',function(){
 	
 		grunt.file.copy('page1.html', config.buildFolder + '/' + config.pageOneName + '.html',{
@@ -68,6 +70,17 @@ module.exports = function (grunt) {
 
 	});
 
-	grunt.registerTask('build',['formatPage1','formatPage2','formatIndex']);
+	grunt.initConfig({
+
+		jasmine: {
+			JS: {
+				options: {
+					specs: 'spec/*.spec.js'
+				}
+			}
+		}
+	});
+
+	grunt.registerTask('build',['formatPage1','formatPage2','formatIndex','jasmine']);
 
 };
